@@ -1,0 +1,51 @@
+<html>
+    <head>
+        <script src='Lib/d3.v3.min.js'></script>
+    </head>
+    
+    <body>
+        <svg>
+        </svg>
+    
+        <script>
+            // inserire scale per parametrizzare
+            var mapX = d3.scale.linear()
+                .domain([0, 20])
+                .range([0,400])
+            
+            var mapY = d3.scale.linear()
+                .domain([0, 1])
+                .range([0,100])
+
+            var genLine = d3.svg.area()
+                .x(function(d, i){
+                    return mapX(i)
+                })
+                .y1(function(d, i){
+                    // parte superiore della linea
+                   return mapY(d)
+                })
+                .y0(function(d, i){
+                    return 150
+                })
+                .interpolate('basis')
+            
+            var myPath = d3.select('svg')
+                            .append('path')
+            function draw(data){
+                /*d3.select('svg')
+                .append('path')*/
+                myPath.transition()
+                .attr('d', genLine(data))
+                .attr('stroke', 'purple')
+            }
+            
+            d3.select('svg').on('click', function(){
+                var data = d3.range(20).map(function(){
+                    return Math.random()
+                })   
+                draw(data)
+            })
+        </script>
+    </body>
+</html>

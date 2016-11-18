@@ -1,0 +1,35 @@
+<html>
+    <head>
+        <script src='Lib/d3.v3.min.js'></script>
+    </head>
+        <body>
+            <svg width = 100000></svg>
+            
+            <script>
+                d3.csv('athletes_sochi.csv', function(data){
+                    var byAge = d3.nest()
+                        .key(function(d,i){
+                            return d.age
+                        })
+                        .entries(data)
+                    console.log(byAge)
+                    byAge.sort(function(a, b){
+                        return d3.ascending(a.key, b.key)
+                    })
+                    
+                    d3.select('svg')
+                        .selectAll('circle')
+                        .data(byAge)
+                        .enter()
+                        .append('circle')
+                        .attr('r', function(d,i){
+                            return d.values.length / 10
+                        })
+                        .attr('cy', 100)
+                        .attr('cx', function(d,i){
+                            return d.values.key*10
+                        })
+                })
+            </script>
+        </body>
+</html>

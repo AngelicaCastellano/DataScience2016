@@ -1,0 +1,75 @@
+<html>
+    <head>
+        <script src = 'Lib/d3.v3.min.js'>
+        </script>
+        <body>
+            <svg height = 800></svg>
+            
+            <script>
+                var dataset = [3,67, 6, 8, 23, 56, 8, 23, 5]
+                
+                var graficoCerchi = d3.select('svg')
+                    .selectAll('g')
+                    .data(dataset)
+                    .enter()
+                    .append('g')
+                    .attr('transform', function(d,i){
+                            return 'translate('+(i*30+20)+','+d+')'
+                        })
+                    graficoCerchi.append('circle')
+                        .attr('r', 0)
+                        .attr('cx', 0)
+                        .attr('cy', 0)
+                        .attr('opacity', 0)
+                        .attr('fill', 'orange')
+                        .attr('stroke', 'blue')
+                        .transition()
+                        .duration(2000)
+                        .delay(function(d,i){
+                            return 100*i    
+                        })
+                        .attr('opacity', 1)
+                        .attr('r', function(d,i){
+                            return d/2
+                        })
+                        .attr('cx', function(d,i){
+                            return i+10
+                        })
+                        .attr('cy', function(d,i){
+                            return d+30
+                        })
+
+                    graficoCerchi.append('text')
+                        .text(function(d,i){
+                            return d
+                        })
+                        .attr('text-anchor', 'middle')
+                        /*.attr('x', function(d,i){
+                            return i+5
+                        })*/
+                        .attr('y', function(d,i){
+                            return d+30
+                        })
+                        .attr('fill', 'blue')
+                        .attr('opacity', 0)
+                        /*.transition()
+                        .duration(2000)
+                        .delay(function(d,i){
+                            return i*200
+                        })
+                        .attr('opacity', 1)*/
+                    
+                    graficoCerchi.on('mouseenter', function(){
+                        d3.select(this)
+                            .select('text')
+                            .attr('opacity', 1)
+                    })
+                    graficoCerchi.on('mouseleave', function(){
+                        d3.select(this)
+                            .select('text')
+                            .attr('opacity', 0)
+                    })
+            </script>
+        </body>
+    </head>
+</html>

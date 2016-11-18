@@ -1,0 +1,85 @@
+<html>
+    
+    <head>
+        <script src="Lib/d3.v3.min.js"></script>
+    </head>
+    
+    <body>
+    
+        <svg style= "border:0.5px solid"></svg>
+        
+        <script>
+            var rett1 = d3.select('svg')
+                .append('rect')
+                .attr('width', 40)
+                .attr('height', 0)
+                .attr('y', 110)
+            rett1.transition()
+                .duration(1500)
+                .attr('y', 30)
+                .attr('height', 80)
+                .attr('fill', 'yellow')
+                //.attr('width', 40)
+            rett1.on('mouseon', function(){
+                d3.select(this)
+                    .attr('fill','red')
+            })
+            rett1.on('mousedown', function(){
+                d3.select(this)
+                    .attr('fill','blue')
+            })
+            
+            var mioRett = d3.select('svg')
+                .append('rect')
+                .attr('x', 85)
+                .attr('y', 110)
+                .attr('width', 0)
+                .attr('height', 0)
+                .attr('fill', 'orange')
+            mioRett.transition()
+                .delay(2200)
+                .duration(2000)
+                .attr('x', 45)
+                .attr('y', 60)
+                .attr('width', 40)
+                .attr('height', 50)
+            mioRett.on('click', function(){
+                        d3.select(this)
+                            .transition()
+                            .duration(2500)
+                            .attr('fill', 'red')
+                    })
+            mioRett.on('mouseenter', function(){
+                        d3.select(this)
+                            .attr('fill', 'blue')
+                    })
+            mioRett.on('mouseleave', function(){
+                        d3.select(this)
+                            .attr('fill', 'orange')
+                    })
+                        
+            var rett2 = d3.select('svg')
+                .append('rect')
+                .attr('x', 90)
+                .attr('y', 110)
+                .attr('width', 40)
+                .attr('height', 0)
+            rett2.transition()
+                .delay(1700)
+                .duration(1500)
+                .ease('bounce')
+                //.attr('x', 90)
+                .attr('y', 10)
+                //.attr('width', 40)
+                .attr('height', 100)
+                .attr('fill', 'yellow')
+            rett2.on('click', function(){
+                    d3.select(this)
+                        .attr('fill','white')
+                        .attr('stroke', 'red')
+            })
+        </script>
+        
+    </body>
+
+</html>

@@ -1,0 +1,82 @@
+<html>
+
+    <head>
+        <script 
+                src="Lib/d3.v3.min.js">
+        </script>
+    </head>
+    
+    <svg width='10000'></svg>
+    
+    <body>
+        <script>
+            d3.csv('athletes_sochi.csv', 
+                function(data){
+                    console.log(data)
+//                    console.log(data[0].name)
+                    
+                    var rettangoli = d3.select('svg')
+                        .selectAll('rect')    
+                        .data(data)
+                        .enter()
+                        .append('rect')
+                        .attr('fill', 'orange')
+                        .attr('height', 0)
+                        .attr('width', 5)
+                        .attr('x', function(d,i){
+                            return i*6
+                        })
+                        .attr('y', 100)
+                        .attr('opacity', 0)
+                        rettangoli.transition()
+                        .duration(2500)
+                        .delay(function(d,i){
+                            return 100*i
+                        })
+//                        .attr('height', function(d,i){
+//                            return d.age
+//                        })
+                        .attr('opacity', 1)
+                        .attr('height', function(d,i){
+                            return d.age
+                        })
+                        .attr('y', function(d,i){
+                            return 100-d.age    
+                        })
+                        rettangoli.on('click',function(d,i){
+                            if(d.clicked){
+                                d3.select(this)
+                                    .attr('fill', 'orange')
+                                d.clicked = false
+                            }else{
+                                d3.select(this)
+                                    .attr('fill', 'blue')
+                                d.clicked = true}
+                        })
+/*                        rettangoli.on('mouseenter', function(){
+                            d3.select(this)
+                            .attr('fill', 'orange')
+                        })
+*/                    /*
+                    d3.select('svg')
+                        .selectAll('circle')    
+                        .data(data)
+                        .enter()
+                        .append('circle')
+                        .attr('r', function(d,i){
+                            return 2
+                        })
+                        .attr('cx', function(d,i){
+                            return d.weight*2
+                        })
+                        .attr('cy', function(d,i){
+                            return d.height*100
+                        })
+                        .attr('opacity', 0.1)
+                    })
+                    */
+                })
+        </script>
+    </body>
+
+</html>

@@ -1,0 +1,20 @@
+<html>
+    <head>
+        <script src='Lib/d3.v3.min.js'></script>
+    </head>
+        <body>
+            <svg>
+            </svg>
+            
+            <script>
+                d3.select('body')
+                    .append('svg')
+                    .append('rect')
+                    .attr('width', 10)
+                    .attr('height', 10)
+                    .append('g')
+                    .append('circle')
+                    .attr('r', 10)
+            </script>
+        </body>
+</html>

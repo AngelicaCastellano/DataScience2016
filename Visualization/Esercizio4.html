@@ -1,0 +1,39 @@
+<html>
+    <head>
+        <script src='Lib/d3.v3.min.js'>
+        </script>
+        <body>
+            <svg>
+            </svg>
+            
+            <script>
+                var dataset = [3,67, 6, 8, 23, 56, 8, 23, 5]
+                
+                var mioGruppo = d3.select('svg')
+                    .selectAll('g')
+                    .data(dataset)
+                    .enter()
+                    .append('g')
+                    .attr('transform', function(d,i){
+                            return 'translate('+i*21+',0)'
+                        })
+                mioGruppo.append('rect')
+                    .attr('width', 20)
+                    .attr('height', function(d,i){
+                        return d
+                    })
+                    .attr('y', function(d,i){
+                        return 100-d
+                    })
+                mioGruppo.append('text')
+                    .text(function(d,i){
+                        return d
+                    })
+                    .attr('y', function(d,i){
+                        return 90-d
+                    })
+                    .attr('x', 1)
+            </script>
+        </body>
+    </head>
+</html>

@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <script src='Lib/d3.v3.min.js'></script>
+    </head>
+        <body>
+            <svg></svg>
+            
+            <script>
+                d3.csv('athletes_sochi.csv', function(data){
+                    var byAge = d3.nest()
+                        .key(function(d,i){
+                            return d.age
+                        })
+                        .entries(data)
+                    console.log(byAge)
+                    byAge.sort(function(a, b){
+                        return d3.ascending(a.key, b.key)
+                    })
+                    
+                    var min = d3.min(byAge, function(d,i){
+                        return d.values.length
+                    })
+                    var max = d3.max(byAge, function(d,i){
+                        return (d.values.length)
+                    })
+                    console.log(min, max)
+                    
+                    var myScale = d3.scale.linear()
+                        .domain([min, max*15])
+                        .range([0, 300])
+                    var indiceMax = d3.max(byAge, function(d,i){
+                        return i
+                    })
+                    var scalaOpac = d3.scale.linear()
+                        .domain([0, indiceMax])
+                        .range([0, 1])
+                                        
+                    d3.select('svg')
+                        .selectAll('circle')
+                        .data(byAge)
+                        .enter()
+                        .append('circle')
+                        .attr('fill', 'blue')
+                        .attr('r', function(d,i){
+                            return myScale(d.values.length)
+                        })
+                        .attr('cy', 50)
+                        .attr('cx', function(d,i){
+                            return i * myScale(d.values.length)
+                        })
+                        .attr('opacity', function(d,i){
+                            return scalaOpac(i)
+                        })
+                })
+            </script>
+        </body>
+</html>

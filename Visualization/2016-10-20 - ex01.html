@@ -1,0 +1,97 @@
+<html>
+    <head>
+        <script src='Lib/d3.v3.min.js'></script>  
+        <style>
+            /* Istruzioni css di stile solo per le linee e i path
+            degli assi, la delimitazione del comando la definisco
+            utilizzando la classe .axis*/
+            .axis line, .axis path{
+                fill:none;
+                stroke:black;
+            }
+        </style>
+    </head>
+    <body>
+        <svg>
+        
+        </svg>
+        
+        <script>
+            var axg = d3.select('svg')
+                .append('g')
+                .attr('class', 'axis')
+                //.attr('tranform', 'rotate(45)')
+                .attr('tranform', 'translate(0, 100)')
+            
+            function draw(data){
+                
+                var circle = d3.select('svg')
+                    .selectAll('circle')
+                    .data(data)
+                
+                var mapX = d3.scale.linear()
+                    .domain([0, data.lenght])
+                    .range([20, 200])
+                
+                /*var maxR = d3.min(l, function(d,i){
+                        return d.values.
+                })*/
+                
+                var mapY =d3.scale.linear()
+                    .domain(0, 50 )
+                    .range([20, 100])
+                
+                var ax = d3.svg.axis()
+                    .orient('bottom')
+                    .scale(mapX)
+                
+                /*d3.select('svg')
+                    .append('g')
+                    attr.('transform', 'translate(0, 100)')*/
+                axg.trasition()
+                    .call(ax)
+                
+                var ay = d3.svg.axis()
+                    .orient('left')
+                    .scale(mapY)
+                    
+                    
+                // enter block
+                circle.enter()
+                    .append('circle')
+                    .attr('cx', 0)
+                    .attr('cy', 40)
+                    .attr('r', 0)
+                
+                // exit block
+                circle.exit()
+                    .transition()
+                    .attr('cy', 0)
+                    .remove()
+                
+                // update block
+                circle.transition()
+                    .duration(2000)
+                    .delay(function(d, i){
+                        return i + 100    
+                    })
+                    .attr('r', function(d, i){
+                        return d + 10
+                    })
+                    .attr('cx', function(d, i){
+                        return mapX(i)
+                    })
+            }
+            
+            d3.select('svg')
+                .on('click', function(d, i){
+                    var l = parseInt(Math.random() * 20) + 3
+                    console.log(l)
+                    var data = d3.range(l).map(function(d, i){
+                            return Math.random()
+                        })
+                    draw(data)
+                })
+        </script>
+    </body>
+</html>

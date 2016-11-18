@@ -1,0 +1,74 @@
+<html>
+    <head>
+        <script src='Lib/d3.v3.min.js'></script>
+    </head>
+        <body>
+            <svg></svg>
+            
+            <script>
+                d3.csv('athletes_sochi.csv', function(data){
+                    function maleSum(arr){
+                        var somma = d3.sum(arr, function(d,i){
+                            return (d.gender == 'Male') ? 1 : 0
+                        })
+                        return somma
+                    }
+                    function femaleSum(arr){
+                        var somma = d3.sum(arr, function(d,i){
+                            return (d.gender == 'Female') ? 1 : 0
+                        })
+                        return somma
+                    }
+                    var newdata = d3.nest()
+                    .key(function(d){
+                        return d.country
+                    })
+                    .rollup(function(d){
+                        return {
+                            male: maleSum(d),
+                            female: femaleSum(d)
+                        }
+                    })
+                    .entries(data)
+                console.log(newdata)
+                
+                var gruppo = d3.select('svg')
+                    .selectAll('g')
+                    .data(newdata)
+                    .enter()
+                    .append('g')
+                    .attr('transform', function(d,i){
+                        return 'translate(' + i*30 + ',0)'
+                    })
+                    gruppo.append('rect')
+                        .attr('width', 4)
+                        .attr('height', function(d,i){
+                            return d.values.female
+                        })
+                        .attr('fill', 'pink')
+                        .attr('x', 4)
+                        .attr('y', function(d,i){
+                            return 150-d.values.female    
+                        })
+                    gruppo.append('rect')
+                        .attr('width', 4)
+                        .attr('height', function(d,i){
+                            return d.values.male
+                        })
+                        .attr('fill', 'blue')
+                        .attr('y', function(d,i){
+                            return 150-d.values.male    
+                        })
+                    gruppo.append('text')
+                        .text(function(d,i){
+                            return d
+                        })
+                        .attr('text', function(d,i){
+                            return d.key    
+                        })
+                        .attr('text-anchor', 'middle')
+                        .attr('y', 30)
+                })
+            </script>
+        </body>
+</html>

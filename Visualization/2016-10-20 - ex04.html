@@ -1,0 +1,30 @@
+<html>
+    <head>
+        <script src='Lib/d3.v3.min.js'></script>
+    </head>
+    
+    <body>
+        <svg>
+        </svg>
+    
+        <script>
+            var myArc = d3.svg.arc()
+                .innerRadius(function(d, i){
+                    return 50
+                })
+                .outerRadius(function(d, i){
+                    return 150
+                })
+                .startAngle(function(d, i){
+                    return 0
+                })
+                .endAngle(function(d, i){
+                    return Math.PI
+                })
+            
+            d3.select('svg')
+                .append('path')
+                .attr('d', myArc())
+        </script>
+    </body>
+</html>
